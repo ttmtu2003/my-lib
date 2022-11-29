@@ -1,0 +1,12 @@
+.dropdown-toggle::after {
+  margin-left: 1rem !important;
+  vertical-align: 0.155em !important;
+}
+
+.dropdown-toggle:hover {
+  background-color: #C7930E;
+}
+
+.show>.btn-secondary.dropdown-toggle {
+  background-color: #C7930E;
+}

@@ -1,0 +1,41 @@
+.navbar .navbar-brand {
+  color: #C7930E !important;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+}
+
+.navbar {
+  background: rgba(0, 0, 0, 0.52);
+}
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+.navbar-toggler {
+  background-color:#C7930E ;
+}
+
+
+.nav-item > a {
+  color: white !important;
+ &:hover { 
+  color:#C7930E !important; 
+ }
+}
+
+@media(max-width: (map-get($grid-breakpoints, md))) {
+.navbar-collapse.collapsing,
+.navbar-collapse.show {
+    padding: 0 1em 1rem;
+    background-color: rgba(197, 196, 196, 0.52);
+    text-align: right;
+    // border-radius: 0.4rem;
+    width:10px
+}
+}
