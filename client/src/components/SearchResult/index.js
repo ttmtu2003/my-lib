@@ -3,7 +3,7 @@ import { Search } from 'react-feather'
 import { useHistory } from 'react-router-dom'
 import { Col, Row } from 'reactstrap'
 // images
-import defaultBook from '../../../public/images/defaultBook.png'
+import defaultBook from '../../images/defaultBook.png'
 
 const SearchResult = ({ renderedItem, searchQuery = '' }) => {
 
@@ -18,13 +18,12 @@ const SearchResult = ({ renderedItem, searchQuery = '' }) => {
 
   return (
     <div className="mt-10">
-      <Row>
-        <h1 className="w-full t-text-center t-text-white t-font-semibold">SEARCH RESULTS {typeof(renderedItem) === "object" && `(${renderedItem?.length || 0})`}</h1>
-      </Row>
-
       {renderedItem ? 
         (typeof(renderedItem) === "object") && (
           <div>
+            <Row>
+              <h1 className="w-full t-text-center t-text-white t-font-semibold">SEARCH RESULTS {typeof(renderedItem) === "object" && `(${renderedItem?.length || 0})`}</h1>
+            </Row>
             <div className="t-text-white t-text-center mt-3">All books matching '{searchQuery}'</div>
             <Row xs={3}>
               {renderedItem.map((item, index) => 
@@ -37,7 +36,10 @@ const SearchResult = ({ renderedItem, searchQuery = '' }) => {
           </div>
         ) : (
           <div className="mt-10">
-            <h2 className=" t-text-white t-text-center">No result found for '{searchQuery}'</h2>
+            <Row>
+              <h1 className="w-full t-text-center t-text-white t-font-semibold">SEARCH RESULTS {typeof(renderedItem) === "object" && `(${renderedItem?.length || 0})`}</h1>
+            </Row>
+            <h2 className=" t-text-white t-text-center mt-3">No result found for '{searchQuery}'</h2>
             <Search size={42} className='mt-4 t-text-white mx-auto' />
           </div>
       )}

@@ -3,13 +3,12 @@ import axios from 'axios'
 export async function searchBook(searchQuery) {
   return await axios.get(`http://localhost:3030/explore?q=${searchQuery}`)
   .then( res => {
-    console.log("SEARCH", res)
-    return res.data
+    return res
   })
 }
 
-export async function addToCollection(userToken, bookId) {
-  console.log("USER", userToken)
+export async function addToLibrary(userToken, bookId) {
+  let data
   await axios.post(`http://localhost:3030/explore/book-detail`, {
     mode: 'cors',
     crossDomain: true,
@@ -24,8 +23,6 @@ export async function addToCollection(userToken, bookId) {
       bookId
     }
   })
-  .then(res => {
-    console.log("RES DATA IN APIFUNC", res.data)
-    return res
-  })
+  .then(res => data = res)
+  return data
 }

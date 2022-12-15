@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button, CardTitle, Form, FormGroup, Input, Label } from 'reactstrap'
 import { loginUser } from '../../APIFunctions/Auth'
 
-const LoginForm = ( className ) => {
+const LoginForm = ( {className} ) => {
   const [ username, setUsername ] = useState("")
   const [ password, setPassword ] = useState("")
   const [ errorMsg, setErrorMsg ] = useState("")
@@ -11,7 +11,7 @@ const LoginForm = ( className ) => {
   const handleSubmit = async (e) => {
     e.preventDefault();  
     const { status, token, error} = await loginUser(username, password)
-    
+
     if(status === 'ok') {
       window.localStorage.setItem('isAuthed', true)
       window.localStorage.setItem("token", token)

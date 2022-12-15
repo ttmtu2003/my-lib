@@ -4,13 +4,13 @@ import Footer from '../../components/Footer'
 import { Cover } from '../../components/HeroFrame'
 import NavBar from '../../components/Navbar/Navbar'
 // images
-import defaultBook from '../../../public/images/defaultBook.png'
+import defaultBook from '../../images/defaultBook.png'
 import { Col, Row } from 'reactstrap'
 import { useHistory } from 'react-router-dom'
 
-const MyLibPage = ({ props: setSelectedBook }) => {
+const MyLibPage = () => {
   let [ renderedItem, setRenderedItem ] = useState([])
-  const token = localStorage.getItem('token')
+  const token = window.localStorage ? window.localStorage.getItem('token') : ''
 
   // -- router --
   const history = useHistory()
@@ -31,11 +31,11 @@ const MyLibPage = ({ props: setSelectedBook }) => {
     .catch(console.error)
   }, [])
 
-  console.log("RENDER", renderedItem)
   return(
     <div>
       <NavBar />
-      <Cover>
+
+      <Cover className="lib-cover">
         <h1 className='t-w-3/4 t-text-white t-font-bold t-text-[4rem] t-text-center t-leading-normal'>My Library</h1>
       </Cover>
 

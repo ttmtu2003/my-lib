@@ -24,9 +24,9 @@ const ExplorePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    let { status, booksData } = await searchBook(searchQuery)
-    if(status === "ok") {
-      setRenderedItem(booksData)
+    let { status, data } = await searchBook(searchQuery)
+    if(status === 200) {
+      setRenderedItem(data.booksData)
     } else {
       setRenderedItem(null)
     }

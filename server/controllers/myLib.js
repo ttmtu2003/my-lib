@@ -5,7 +5,9 @@ import mongoose from "mongoose"
 export const getBooksInLibrary = async (req, res) => {
   const { userToken } = req.query
   try {
-    const books = await Library.find({ userToken: userToken }).populate('books', 'id title authors imageLinks')
+    const books = await Library
+                        .find({ userToken: userToken })
+                        .populate('books', 'id title authors imageLinks')
     
     if(books) {
       res.status(200).send({ books: books })
@@ -18,7 +20,6 @@ export const getBooksInLibrary = async (req, res) => {
 }
 
 export const getBookDetail = async (req, res) => {
-  // console.log("BOOK ID", )
   const { userToken, bookId } = req.query
   try {
     const book = await Library.findOne({ userToken: userToken, books: mongoose.Types.ObjectId(bookId) })
@@ -43,7 +44,7 @@ export const updateBookDetail = async (req, res) => {
       upsert: true
     }
     await Library.findOneAndUpdate(filter, obj, options)
-    res.status(200).send({ message: "Successfully updated book detail" })
+    res.status(200).send({ message: "Successfully updated book detail!" })
   } catch(err) {
     res.status(404).send({ message: err })
   }
@@ -54,7 +55,7 @@ export const deleteBook = async (req, res) => {
   try {
     const filter = { userToken: userToken, books: mongoose.Types.ObjectId(id) }
     await Library.deleteOne(filter)
-    res.status(200).send({ message: "Successfully removed book from library" })
+    res.status(200).send({ message: "Successfully removed book from library!" })
   } catch(err) {
     res.status(404).send({ message: err })
   }

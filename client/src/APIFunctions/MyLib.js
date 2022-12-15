@@ -2,9 +2,7 @@ import axios from 'axios'
 
 export async function getAllBookInLibrary(token) {
   return await axios.get(`http://localhost:3030/mylibrary`, { params: { userToken: token } })
-  .then( res => {
-    return res.data
-  })
+  .then( res => res.data)
   .catch(console.error)
 }
 
@@ -12,7 +10,6 @@ export async function getAllBookInLibrary(token) {
 export async function getLibBookDetail(token, id) {
   return await axios.get(`http://localhost:3030/mylibrary/book-detail/`, { params: { userToken: token, bookId: id } })
   .then( res => {
-    console.log("UPDAYED BOOJK RETURN", res.data.updatedBook)
     return res.data.updatedBook
   })
   .catch(console.error)
@@ -20,6 +17,7 @@ export async function getLibBookDetail(token, id) {
 
 // update book detail
 export async function updateBookDetail(userToken, bookId, rating, status, startDate, doneDate, comments) {
+  let data
   return await axios.put('http://localhost:3030/mylibrary/book-detail/', {
     body: {
       userToken,
@@ -31,8 +29,8 @@ export async function updateBookDetail(userToken, bookId, rating, status, startD
       comments
     }
   })
-  .then(res => res.data)
-  .catch(console.error)
+  .then(res => data = res)
+  return data
 }
 
 // delete book from library

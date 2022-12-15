@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Chart as ChartJS, ArcElement, PieController, Tooltip, Title, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-
-ChartJS.register(ArcElement, PieController, Tooltip, Title, Legend);
-
 
 const PieChart = ({ className, booksRead }) => {
   const [genreStats, setGenreStats] = useState([]);

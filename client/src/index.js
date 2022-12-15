@@ -6,7 +6,7 @@ import Routing from './Routing';
 
 function App() {
 
-  const isAuthenticated = localStorage.getItem('isAuthed')
+  const isAuthenticated = window.localStorage ? window.localStorage.getItem('isAuthed') : false
   return (
     <>
       <Routing isAuthenticated={isAuthenticated} />

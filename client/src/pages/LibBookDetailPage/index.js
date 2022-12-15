@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Footer from '../../components/Footer'
 import DatePicker from 'react-datepicker'
-import HeroFrame, { Cover } from '../../components/HeroFrame'
+import { Cover } from '../../components/HeroFrame'
 import NavBar from '../../components/Navbar/Navbar'
 import _upperFirst from 'lodash/upperFirst'
 import _each from 'lodash/each'
 import _map from 'lodash/map'
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap'
 // images
-import defaultBook from '../../../public/images/defaultBook.png'
+import defaultBook from '../../images/defaultBook.png'
 import { Rating } from 'react-simple-star-rating'
 import './style.scss'
 import { getLibBookDetail, updateBookDetail, deleteBook } from '../../APIFunctions/MyLib'
 import DropDown from '../../components/DropDown'
+import { differenceInDays } from 'date-fns'
 
 const LibBookDetailPage = () => {
   const [rating, setRating] = useState(0)
@@ -23,10 +24,10 @@ const LibBookDetailPage = () => {
 
   const statusList = ['Not started', 'Reading', 'Finished']
 
-  const token = localStorage.getItem('token')
+  const token = window.localStorage ? window.localStorage.getItem('token') : ''
 
   // get selected book detail in local storage
-  let book = localStorage.getItem('libraryBook')
+  let book = window.localStorage.getItem('libraryBook')
   let selectedBook = JSON.parse(book)
   
   let imgSrc = selectedBook?.imageLinks?.thumbnail.replace('&edge=curl','')
@@ -52,7 +53,12 @@ const LibBookDetailPage = () => {
   
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await updateBookDetail(token, selectedBook?._id, rating, status, startDates, doneDates, comments)
+    if(differenceInDays(doneDates, startDates) < 0) alert("Finished date cannot be before start date")
+    else {
+      const res = await updateBookDetail(token, selectedBook?._id, rating, status, startDates, doneDates, comments)
+      alert(res.data.message)
+    }
+
   }
 
   const handleDeleteBook = async () => {
@@ -93,13 +99,13 @@ const LibBookDetailPage = () => {
   return (
     <div>
       <NavBar />
-      <Cover>
-        <h1 className='t-w-3/4 t-text-white t-font-bold t-text-[4rem] t-text-center t-leading-normal'>{selectedBook.title}</h1>
+      <Cover className="lib-detail-cover">
+        <h1 className='t-w-3/4 t-text-white t-font-bold t-text-[2rem] md:t-text-[4rem] t-text-center t-leading-normal'>{selectedBook?.title || "Untitled"}</h1>
       </Cover>
 
-      <Form onSubmit={handleSubmit} className="t-mt-[3rem] mx-auto t-w-[70rem]">
+      <Form onSubmit={handleSubmit} className="t-mt-[3rem] mx-auto md:t-w-[70rem]">
         <Row>
-          <Col xs={3}>
+          <Col xs={12} sm={4}>
             
             {/* Book cover */}
             <Row>
@@ -111,7 +117,7 @@ const LibBookDetailPage = () => {
             </FormGroup>
 
             <FormGroup>
-              <Row  className="t-flex t-justify-center mt-3">
+              <Row className="ml-12 ml-sm-4 t-flex t-justify-center mt-3">
                 <Col xs={3}>
                   <h3 className="t-text-white">Status: </h3>
                 </Col>
@@ -123,12 +129,12 @@ const LibBookDetailPage = () => {
             
             {(status === 'Reading' || status === 'Finished') && (
               <FormGroup>
-                <Row  className="t-flex t-justify-center mt-2">
+                <Row  className="ml-12 ml-sm-4 t-flex t-justify-center mt-2">
                   <Col xs={3}>
                     <h3 className="t-text-white">Start: </h3>
                   </Col>
                   <Col xs={9}>
-                    <DatePicker className="ml-1 t-w-[10rem]" selected={startDates} onChange={(date) => handleStartDate(date)} />
+                    <DatePicker className="ml-1 sm:t-w-[7rem] md:t-w-[10rem]" selected={startDates} onChange={(date) => handleStartDate(date)} />
                   </Col>
                 </Row>
               </FormGroup>
@@ -136,21 +142,21 @@ const LibBookDetailPage = () => {
 
             {status === 'Finished' && (
               <FormGroup>
-                <Row className="t-flex t-justify-center mt-3">
+                <Row className="ml-12 ml-sm-4 t-flex t-justify-center mt-3">
                   <Col xs={3}>
                     <h3 className="t-text-white">Finished: </h3>
                   </Col>
                   <Col xs={9}>
-                    <DatePicker className="ml-1 t-w-[10rem]" selected={doneDates} onChange={(date) => handleDoneDate(date)} />
+                    <DatePicker className="ml-1 sm:t-w-[7rem] md:t-w-[10rem]" selected={doneDates} onChange={(date) => handleDoneDate(date)} />
                   </Col>
                 </Row>
               </FormGroup>
             )}
           </Col>
           
-          <Col xs={8} className="ml-8">
+          <Col xs={12} sm={6} className="t-px-10 sm:t-px-0 sm:t-ml-10 mt-3 mt-sm-0">
             {/* Book title */}
-            <h1 className="t-text-[#C7930E] t-text-[2rem] t-font-bold">{_upperFirst(selectedBook?.title)}</h1>
+            <h1 className="t-text-[1.5rem] t-text-[#C7930E] sm:t-text-[2rem] t-font-bold">{_upperFirst(selectedBook?.title)}</h1>
             
             {/* Book authors */}
             <h4 className="t-text-[#ADA89E] t-italic mt-2">by {selectedBook?.authors?.join(', ') || 'Unknown'}</h4>
@@ -169,7 +175,7 @@ const LibBookDetailPage = () => {
               />
             </FormGroup>
 
-            <div className='t-relative t-left-[37rem]'>
+            <div className='t-absolute t-right-10 sm:t-right-0'>
               <Button onClick={handleDeleteBook} className="hover:t-cursor-pointer t-bg-transparent hover:t-bg-[#ae2220] border-danger text-danger hover:!t-text-white">
                 Delete
               </Button>

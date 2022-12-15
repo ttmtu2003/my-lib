@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import HomepageImage from '../../../public/images/Homepage.png'
+import HomepageImage from '../../images/Homepage.png'
 import Filter from '../Filter';
 
 export const Cover = styled.div`
@@ -18,7 +18,7 @@ export const Cover = styled.div`
 
 const HeroFrame = () => {
   return (
-    <Cover>
+    <Cover className="hero-frame">
       <h1 className="mb-4 t-text-white t-font-bold t-text-xl sm:t-text-3xl lg:t-text-4xl">EXPLORE ALL BOOKS ON MYLIB</h1>
       <Filter />
     </Cover>

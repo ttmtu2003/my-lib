@@ -1,31 +1,28 @@
-// import React from 'react';
-// import Enzyme, { mount } from 'enzyme';
-// import { expect } from 'chai';
-// import { Row } from 'reactstrap';
+import React from 'react';
+import Enzyme, { mount } from 'enzyme';
+import { expect } from 'chai';
+import { Row } from 'reactstrap';
 
-// import { BrowserRouter } from 'react-router-dom'
-// import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { BrowserRouter } from 'react-router-dom'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
-// import BookDetailPage from '../pages/BookDetailPage'
+import BookDetailPage from '../pages/BookDetailPage'
 
-// Enzyme.configure({ adapter: new Adapter() });
+Enzyme.configure({ adapter: new Adapter() });
 
-// describe('<BookDetailPage />', () => {
+describe('<BookDetailPage />', () => {
 
-//   const wrapper = mount(<BrowserRouter><BookDetailPage /></BrowserRouter>);
+  const wrapper = mount(<BrowserRouter><BookDetailPage /></BrowserRouter>);
 
-//   it('Should render a <Row /> component with 2 children', () => {
-//       const component = wrapper.find(Row);
-//       expect(component).to.have.lengthOf(2);
-//   });
-//     // it('Should render password label & input fields', () => {
-//     //   const currentInput = inputArray.get(1).props;
-//     //   expect(currentInput.type).to.equal('password');
-//     // });
-//     // it('Should a <MajorDropdown > component', () => {
-//     //   expect(wrapper.find(MajorDropdown)).to.have.lengthOf(1);
-//     // });
-//     // it('Should render captcha component', () => {
-//     //   expect(wrapper.find(GoogleRecaptcha));
-//     // });
-//   });
+  it('Should render a <Row /> component with 2 children', () => {
+      const component = wrapper.find('.book-detail');
+      expect(component).to.have.lengthOf(2);
+  });
+  it('Should render 1 React component: NavBar', () => {
+    expect(wrapper.find('NavBar')).to.have.lengthOf(1);
+  });
+  it('Should render 1 React component: Footer', () => {
+    expect(wrapper.find('Footer')).to.have.lengthOf(1);
+  });
+
+});
